@@ -1,6 +1,5 @@
 # math_tables
-
-A new Flutter project.
+Learning flutter by creating simple application that can print tables of mathematics 
 
 ## Getting Started
 
