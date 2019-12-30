@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import './components/splash.dart';
+import './components/home.dart';
 
 void main() => runApp(MyApp());
 
@@ -7,32 +9,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Math Tables',
       theme: ThemeData(
-        
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
+        primaryColorDark: Color.fromRGBO(85, 173, 251, 1),
+        primaryColorLight: Color.fromRGBO(254, 209, 87, 1),
         primarySwatch: Colors.blue,
+        fontFamily: 'Raleway'
       ),
-      home: Container(
-        padding: EdgeInsets.all(10.0),
-        child:  Align(
-          alignment: Alignment.center,
-          child: Text(
-          "Math Tables",
-          style: TextStyle(
-            color: Colors.white,
-            ),
-          )
-        ) ,
-      )
+      home: Home()
     );
   }
 }
