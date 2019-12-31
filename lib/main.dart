@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './components/splash.dart';
 import './components/home.dart';
+import './components/table.dart';
 
 void main() => runApp(MyApp());
 
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'Raleway'
       ),
-      home: Home()
+      home: Tables()
     );
   }
 }
