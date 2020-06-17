@@ -15,10 +15,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColorDark: Color.fromRGBO(85, 173, 251, 1),
         primaryColorLight: Color.fromRGBO(254, 209, 87, 1),
+        primaryColor: Color.fromRGBO(85, 173, 251, 1),
         primarySwatch: Colors.blue,
+
         fontFamily: 'Raleway'
       ),
-      home: Tables()
+      // home: Tables(2,10)
+      home: Splash()
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flare_flutter/flare_actor.dart';
+import './table.dart';
+import './appbar.dart';
 
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
@@ -9,21 +11,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  Widget _headingTop() {
-    return new Row(
-      children: <Widget>[
-        new Container(
-          child: new Text(
-            "Happy Learning!",
-            style: new TextStyle(
-                color: Theme.of(context).primaryColorDark,
-                fontSize: 30,
-                fontWeight: FontWeight.bold),
-          ),
-        )
-      ],
-    );
-  }
+  final _formKey = GlobalKey<FormState>();
 
   Widget _button(double width, String text) {
     return new Container(
@@ -67,6 +55,118 @@ class _HomeState extends State<Home> {
     );
   }
 
+  TextEditingController _numberFieldController = TextEditingController();
+  TextEditingController _toFieldController = TextEditingController();
+
+  _displayDialog(BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              'Required to continue',
+              style: TextStyle(color: Theme.of(context).primaryColorDark),
+            ),
+            content: new Form(
+              key: _formKey,
+              child: new Column(
+                children: <Widget>[
+                  new Container(
+                    padding: EdgeInsets.only(left: 10),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColorLight,
+                        borderRadius: BorderRadius.circular(20)),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      controller: _numberFieldController,
+                      decoration: InputDecoration(
+                        hintText: "Enter table number",
+                        border: InputBorder.none,
+                      ),
+                      style: new TextStyle(
+                        color: Theme.of(context).primaryColorDark,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please Enter Table Number';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  new Container(
+                    margin: EdgeInsets.only(top: 20),
+                    padding: EdgeInsets.only(left: 10),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColorLight,
+                        borderRadius: BorderRadius.circular(20)),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      controller: _toFieldController,
+                      decoration: InputDecoration(
+                        hintText: "Enter Lenght of table",
+                        border: InputBorder.none,
+                      ),
+                      style: new TextStyle(
+                        color: Theme.of(context).primaryColorDark,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please Enter Table Length';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text('CANCEL'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              new FlatButton(
+                child: new Text('NEXT'),
+                onPressed: () {
+                  if (_formKey.currentState.validate()) {
+                     Navigator.of(context).pop();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Tables(
+                          int.parse(_numberFieldController.text),
+                          int.parse(_toFieldController.text),
+                        ),
+                      ),
+                    );
+                  }
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  Widget _gestureDetector(double width) {
+    return new GestureDetector(
+      child: _button(width, "Learn Tables\n\t 2 X 2 = 4"),
+      onTap: () {
+        _displayDialog(context);
+
+        // Navigator.of(context).push(
+        //   MaterialPageRoute(
+        //     builder: (BuildContext context) => Tables(7, 10),
+        //   ),
+        // );
+      },
+    );
+  }
+
   Widget _minionHalfRow(String animation, double width) {
     return new Expanded(
       child: new Center(
@@ -87,7 +187,7 @@ class _HomeState extends State<Home> {
       height: 200,
       child: new Row(
         children: <Widget>[
-          _button(width, "Learn Tables\n\t 2 X 2 = 4"),
+          _gestureDetector(width),
           _minionHalfRow("Wave", width)
         ],
       ),
@@ -143,17 +243,25 @@ class _HomeState extends State<Home> {
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      appBar: TolAppBar.getAppBar(context, "Happy Learning"),
       body: new SafeArea(
         child: new Container(
           padding: EdgeInsets.all(20),
           child: new Column(
             children: <Widget>[
-              _headingTop(),
               _rowMathTables(width),
             ],
           ),
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    _numberFieldController.dispose();
+    _toFieldController.dispose();
+    super.dispose();
   }
 }

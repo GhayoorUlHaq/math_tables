@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flare_flutter/flare_actor.dart';
+import './home.dart';
+import 'dart:async';
 
 class Splash extends StatefulWidget {
   Splash({Key key}) : super(key: key);
@@ -9,6 +11,19 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
+  @override
+  void initState() {
+    super.initState();
+    Timer(
+      Duration(seconds: 3),
+      () => Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (BuildContext context) => Home(),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,16 +39,15 @@ class _SplashState extends State<Splash> {
                 "assets/Minion.flr",
                 alignment: Alignment.topCenter,
                 fit: BoxFit.contain,
-                animation: "Stand",
+                animation: "Dance",
               ),
             ),
             new Text(
               "Loading...",
               style: TextStyle(
-                color: Theme.of(context).primaryColorDark,
-                fontWeight: FontWeight.bold,
-                fontSize: 15
-              ),
+                  color: Theme.of(context).primaryColorDark,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15),
             )
           ],
         ),
