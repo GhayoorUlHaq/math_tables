@@ -1,5 +1,5 @@
-# math_tables
-Learning flutter by creating simple application that can print tables of mathematics 
+# Math Tables
+Math Tables is a flutter application that prints math-tables. It contains animation and basic UI.
 
 ## Getting Started
 
